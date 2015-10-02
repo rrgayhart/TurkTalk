@@ -12,16 +12,18 @@ class MturkService
     mturk.availableFunds
   end
 
-  def get_contact_information(num = 1, reward = 0.01)
+  def write_romance_scene(num = 1, reward = 0.05, scene=nil)
+    scene ||= 'Two vampires are standing on the roof of a building, and one is confessing his love to the other.'
     options = {
-      title: "Find Contact Email",
-      desc: "Based on the contact information, provide contact information for a person.",
-      keywords: "contact, email",
+      title: "Write Paragraph of Romance Novel Content",
+      desc: "Given some information, write a paragraph for a scene in a romance novel.",
+      keywords: "creative, writing, romance",
       num: num,
       reward: reward
     }
     locals = {
-      question_text: 'Email for contact?'
+      question_text: 'Please write a paragraph worth of original text describing the following scene of a romance novel:',
+      question_scene: scene
     }
     partial = 'mturk_questions/basic_hit'
     create_new_hit(options, locals, partial)
@@ -56,7 +58,5 @@ class MturkService
     else
       "http://workersandbox.mturk.com/mturk/preview?groupId=#{hitTypeId}"   # Sandbox Url
     end
-
   end
-
 end
